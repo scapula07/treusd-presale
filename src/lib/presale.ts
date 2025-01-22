@@ -24,14 +24,29 @@ async function getPresaleContract() {
   }
 
   export async function purchaseTokens(amount:string) {
-
-    console.log('Deposit funded!');
     try{
         const contract = await getPresaleContract();
-        const tx = await contract.purchaseTokens(parseFloat(amount), { gasLimit: 400000 });
-        console.log('Deposit funded!',tx);
-      }catch(e){
-        console.log(e)
+        const tx = await contract.purchaseTokens(ethers.parseEther(amount), { gasLimit: 400000 });
+        console.log('Deposit funded!',tx.hash);
+        return tx.hash
+      }catch(e:any){
+        console.log(e.reason,e)
+        throw new Error(e.reason)
       }
+
+}
+
+
+export async function calTokenAmount(amount:string) {
+  try{
+      const contract = await getPresaleContract();
+      const usdcAmount= await contract.calculateTotalAmount(ethers.parseEther(amount), { gasLimit: 400000 });
+      console.log('Deposit funded!',usdcAmount);
+      return ethers.formatEther(usdcAmount);
+
+    }catch(e:any){
+      console.log(e.reason)
+      throw new Error(e.reason)
+    }
 
 }
