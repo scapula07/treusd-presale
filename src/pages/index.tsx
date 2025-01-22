@@ -4,7 +4,6 @@ import DAO from "@/components/DAO";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Home() {
-  console.log("here")
   return (
     <div className="w-full flex flex-col text-white py-10 px-4">
           <ConnectButton  />
